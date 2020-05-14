@@ -43,9 +43,9 @@ class FastTextFeaturizer(DenseFeaturizer):
     ) -> None:
         for example in training_data.intent_examples:
             for attribute in DENSE_FEATURIZABLE_ATTRIBUTES:
-                self._set_textblob_features(example, attribute)
+                self.set_fasttext_features(example, attribute)
 
-    def _set_textblob_features(self, message: Message, attribute: Text = TEXT):
+    def set_fasttext_features(self, message: Message, attribute: Text = TEXT):
         text_vector = self.model.get_word_vector(message.text)
         word_vectors = [
             self.model.get_word_vector(t.text)
@@ -60,7 +60,7 @@ class FastTextFeaturizer(DenseFeaturizer):
         message.set(DENSE_FEATURE_NAMES[attribute], features)
 
     def process(self, message: Message, **kwargs: Any) -> None:
-        self._set_textblob_features(message)
+        self.set_fasttext_features(message)
 
     def persist(self, file_name: Text, model_dir: Text) -> Optional[Dict[Text, Any]]:
         pass
