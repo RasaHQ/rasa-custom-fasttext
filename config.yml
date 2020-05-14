@@ -1,0 +1,33 @@
+language: en
+
+pipeline:
+- name: printer.Printer
+  alias: start
+- name: tbfeats.TextBlobTokenizer
+- name: CountVectorsFeaturizer
+- name: CountVectorsFeaturizer
+  analyzer: char_wb
+  min_ngram: 1
+  max_ngram: 4
+- name: LexicalSyntacticFeaturizer
+- name: tbfeats.TextBlobFeaturizer
+- name: ftfeat.FastTextFeaturizer
+  cache_dir: "/Users/vincent/Development/whatlies/"
+  file: "cc.en.300.bin"
+- name: printer.Printer
+  alias: after fasttext
+- name: outlierfeature.OutlierComponent
+  n_estimators: 100
+- name: outlierfeature.OutlierComponent
+  n_estimators: 200
+- name: outlierfeature.OutlierComponent
+  n_estimators: 500
+- name: printer.Printer
+  alias: after outlier
+- name: DIETClassifier
+  epochs: 20
+
+policies:
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+  - name: MappingPolicy
