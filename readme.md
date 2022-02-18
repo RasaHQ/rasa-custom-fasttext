@@ -84,7 +84,7 @@ There's a downside to fasttext embeddings though; they are huge. The english vec
 you'd end up with a model file that's too big to upload to a docker container. 
 
 Instead of making a component that will persist these embeddings we'll make a component
-that requires the presense of a cached directory. This way you could mount a disk for
+that requires the presence of a cached directory. This way you could mount a disk for
 your docker container that contains these embeddings without having to deal with bloated
 docker containers. Implementation wise that also means that you'll need to add 
 parameters that are required for the component. 
